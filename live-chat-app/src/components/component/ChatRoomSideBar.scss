@@ -1,0 +1,7 @@
+@use '../../scss/global';
+
+.chat-room-side-bar-wrapper{
+    height: 100%;
+    width:100px;
+    background-color: global.$strong-bg-color;
+}

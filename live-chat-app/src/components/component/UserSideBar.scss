@@ -1,0 +1,14 @@
+@use '../../scss/global';
+
+.user-side-bar-wapper{
+    width: 100px;
+    height: 100%;
+    background-color: global.$strong-bg-color;
+}
+
+.user-side-bar{
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 10px;
+    background-color: global.$bg-color;
+}

@@ -1,0 +1,22 @@
+body{
+    margin: 0;
+}
+
+.main-wrapper{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.upper-wrapper{
+    display: flex;
+}
+
+.lower-wrapper{
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+
+}
+

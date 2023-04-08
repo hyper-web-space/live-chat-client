@@ -1,0 +1,9 @@
+@use '../../../scss/global.scss';
+
+.main-page-wrapper{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    background-color: global.$light-bg-color;
+
+}
