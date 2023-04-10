@@ -1,14 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-
-
 import sass from 'sass';
 
-
+// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: 
-  [
-    react(),
+  plugins: [react(),
     {
       name: 'sass',
       // .scss 파일을 .css 파일로 변환합니다.
@@ -18,5 +14,7 @@ export default defineConfig({
         }
       }
     }
-  ]
+  
+  ],
+  
 })
