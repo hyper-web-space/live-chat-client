@@ -2,27 +2,26 @@ import React from 'react'
 import './MainPage.scss'
 
 
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { userId } from '../../../states/userState';
+import { useRecoilValue } from 'recoil';
+
+import { loginFlag } from '../../../states/flagState';
 
 import LogIn from '../../modals/LogIn/LogIn';
+import SignUp from '../../modals/SignUp/SignUp';
 
 export default function MainPage() {
 
-  const [id, setId] = useRecoilState(userId);
+  
+  const isLogin = useRecoilValue(loginFlag);
 
   function checkAuth() {
-
     return false;
   }
 
-  function clickHandler() {
-    setId("hyunbae");
-  }
 
   return (
     <div className='main-page-wrapper'>
-      {checkAuth() ? <p>Login Complete</p> : <LogIn />}
+      {checkAuth() ? <p>Login Complete</p> : isLogin ? <LogIn /> : <SignUp />}
     </div>
   )
 }

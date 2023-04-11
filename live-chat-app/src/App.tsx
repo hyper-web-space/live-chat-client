@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Outlet, Route, Routes } from "react-router-dom";
+import React from 'react';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import './App.scss'
 import Nav from './components/component/Nav';
 import ChatRoomSideBar from './components/component/ChatRoomSideBar';
@@ -14,13 +14,13 @@ function App() {
     return (
       <div className='main-wrapper'>
         <div className='upper-wrapper'>
-          <Nav/>
+          <Nav />
         </div>
         <div className='lower-wrapper'>
-          <ChatRoomSideBar/>
-          <UserSideBar/>
-          <Outlet/>
-        </div>             
+          <ChatRoomSideBar />
+          <UserSideBar />
+          <Outlet />
+        </div>
       </div>
     );
   };
@@ -28,9 +28,9 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Layout/>}>
-          <Route index element={<MainPage/>} />
-          <Route path="/chat-room" element={<ChatRoom/>}/>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<MainPage />} />
+          <Route path="/chat-room" element={<ChatRoom />} />
         </Route>
       </Routes>
     </div>
