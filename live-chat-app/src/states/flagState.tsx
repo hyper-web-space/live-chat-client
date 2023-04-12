@@ -1,15 +1,8 @@
-/*
 
- */
 
-import { atom,selector } from 'recoil';
+import { atom } from 'recoil';
 
-export const LoginFlag = atom({
-    key : 'userId',
+export const loginFlag = atom({
+    key : 'loginFlag',
     default : true,
-});
-
-export const userPw = atom({
-    key : 'userPw',
-    default : "",
 });

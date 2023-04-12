@@ -5,14 +5,14 @@ password	string	비밀번호
 
 import { atom,selector } from 'recoil';
 
-export const userId = atom({
+export const userId = atom<string>({
     key : 'userId',
-    default : "",
+    default : '',
 });
 
-export const userPw = atom({
+export const userPw = atom<string>({
     key : 'userPw',
-    default : "",
+    default : '',
 });
 
 export const filteredTodoListState = selector({
