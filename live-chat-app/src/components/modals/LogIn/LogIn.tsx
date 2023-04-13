@@ -2,7 +2,7 @@ import React, { ChangeEvent } from 'react';
 import './LogIn.scss';
 import logo_white from '../../../../public/logo-white.png';
 import { useSetRecoilState, useRecoilState } from 'recoil';
-import { loginFlag } from '../../../states/flagState';
+import { loginFlag, welcomeFlag } from '../../../states/flagState';
 import axios from '../../../common/api/axios';
 import requests from '../../../common/api/requests';
 import auth from '../../../common/auth/session';
@@ -14,6 +14,7 @@ export default function LogIn() {
 
 
     const setLoginFlag = useSetRecoilState(loginFlag);
+    const setWelcomeFlag = useSetRecoilState(welcomeFlag);
 
     const [id, setId] = useRecoilState(userId);
     const [pw, setPw] = useRecoilState(userPw);
@@ -27,21 +28,16 @@ export default function LogIn() {
         }
     }
 
+    const resetState = () => {
+        setId('');
+        setPw('');
+    }
+
     function signUpClickHandler() {
         setLoginFlag(false);
+        resetState();
     }
 
-    /************************
-    POST /users/signin
-    
-    id	string	사용자 아이디
-    password	string	비밀번호
-
-    {
-    'accessToken': 'string',
-    'refreshToken': 'string'
-    }
-    ************************/
     async function logInClickHandler() {
         //로그인 정보 제출
         // POST 요청은 body에 실어 보냄
@@ -53,7 +49,9 @@ export default function LogIn() {
             //발급된 JWT는 클라이언트 측에서 저장 - 세션 스토리지
             auth.setToken('accessToken', res.data.accessToken);
             auth.setToken('refreshToken', res.data.refreshToken);
+            setWelcomeFlag(true);
         } catch (error) {
+            resetState();
             alert('later make yeajung');
         }
     }
