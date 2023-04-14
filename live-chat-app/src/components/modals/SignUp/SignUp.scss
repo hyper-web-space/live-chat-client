@@ -33,21 +33,61 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    
+    .arrow{
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        width: 50px;
+    }
+    .logo{
+        margin-top: 40px;
+        width: 100px;
+    }
+
+    .combo-container{
+        display: flex;
+        flex-direction: column;
+    }
+
+    p{
+        font-size: 20px;
+        align-self: flex-start;
+        color: white;
+        margin:0;
+    }
+
+    h1{
+        //bold and readient text    
+        font-weight: 600;
+        font-size: 30px;
+        margin-top: 20px;
+        background: -webkit-linear-gradient(45deg, #ff0000, #ff7f00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-animation: rainbow 15s ease infinite;
+        animation: rainbow 15s ease infinite;
+
+    }
+
     div {
         display: flex;
         justify-content: center;
         align-items: center;
     }
-
-    img {
-        margin-top: 70px;
-        height: 100px;
-    }
-
     input {
         height: 25px;
         width: 300px;
+    }
+    
+    button{
+        width: 200px;
         margin-top: 20px;
+        border-radius: 20px;
+        border: none;
+        background-color: white;
+        color: global.$light-bg-color;
+        font-size: 15px;
     }
 
 }
