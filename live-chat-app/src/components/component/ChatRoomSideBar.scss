@@ -1,15 +1,15 @@
-@use '../../scss/global';
+@use "../../scss/global";
 
-.chat-room-side-bar-wrapper{
+.chat-room-side-bar-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100%;
-    width:80px;
+    width: 80px;
     background-color: global.$strong-bg-color;
 }
 
-.divier{
+.divier {
     width: 40px;
     height: 2px;
     background-color: global.$light-bg-color;
@@ -17,30 +17,32 @@
     border-radius: 15px;
 }
 
-.main-button{
+.main-button {
     //rounded violet button
-    background-color: white;
-    border-radius: 15px;
-    border: none;
-    color: white; 
     width: 46px;
     height: 46px;
+    border-radius: 50%;
+    border: none;
+    background-color: global.$light-bg-color;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    &:hover{
-        background-color: global.$light-bg-color;
+    &:hover {
+        background-color: white;
+        transition: 0.3s ease-in;
+        border-radius: 15px;
     }
 
-    img{
+    
+
+    img {
         width: 30px;
     }
 }
 
-.chat-room-list{
-
-    .chat-room{
+.chat-room-list {
+    .chat-room {
         //circle button
         width: 46px;
         height: 46px;
@@ -48,13 +50,19 @@
         border: none;
         background-color: global.$light-bg-color;
         margin: 10px 0;
+        transition: 0.3s ease-in;
 
         //hover effect transition rounded button
-        &:hover{
+        &:hover {
             background-color: white;
             transition: 0.3s ease-in;
             border-radius: 15px;
         }
-        
     }
+}
+
+.clicked{
+    background-color: white  !important;
+    border-radius: 15px  !important;
+    transition: 0.3s ease-in;
 }
