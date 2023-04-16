@@ -13,7 +13,7 @@ export const welcomeFlag = atom({
 });
 
 
-export const dynamicBtnClass = atomFamily({
+export const dynamicBtnClass = atomFamily<boolean, string>({
     key: 'dynamicBtnClass',
     default: true,
   });

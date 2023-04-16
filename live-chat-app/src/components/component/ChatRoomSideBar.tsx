@@ -1,7 +1,7 @@
 import React from 'react'
 import './ChatRoomSideBar.scss'
 import logo from '../../../public/logo.png';
-import { useRecoilState } from 'recoil';
+import { useRecoilState , SetterOrUpdater } from 'recoil';
 import { dynamicBtnClass } from '../../states/flagState';
 
 export default function ChatRoomSideBar() {
@@ -20,17 +20,32 @@ export default function ChatRoomSideBar() {
   ]
   */
   const listData = ['legend', 'wow', 'lol', 'king'];
+  const setterList: Array<SetterOrUpdater<boolean>> = [];
+
 
   function creareChatRoomButton(id: string) {
 
     const [isActive, setIsActive] = useRecoilState(dynamicBtnClass(id));
 
+    if(!setterList.includes(setIsActive)){
+      setterList.push(setIsActive);
+    }
+
     function handleClick() {
-      setIsActive(!isActive);
+
+      if(isActive===true){
+        setterList.forEach((setter) => {
+          setter(true);
+        })
+        setIsActive(!isActive);
+      }
     }
 
     return (
-      <div className={isActive ? 'chat-room' : 'chat-room clicked'} onClick={handleClick} >{id} </div>
+    <div className='chat-room-wrapper'>
+      <div className={isActive ? 'chat-room' : 'chat-room button-clicked'} onClick={handleClick} >{id} </div>
+      <div className={isActive ? 'chat-room-bar' : 'chat-room-bar bar-clicked'} />
+    </div>
     );
   }
 
