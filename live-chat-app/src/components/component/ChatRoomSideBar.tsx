@@ -1,4 +1,3 @@
-import React from 'react'
 import './ChatRoomSideBar.scss'
 import logo from '../../../public/logo.png';
 import { useRecoilState , SetterOrUpdater } from 'recoil';

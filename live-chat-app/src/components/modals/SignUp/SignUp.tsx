@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 import './SignUp.scss'
 import logo_white from '../../../../public/logo-white.png';
 import arrow from '../../../../public/left-arrow.png';
@@ -37,7 +37,7 @@ export default function SignUp() {
     try {
        console.log(id, pw);
       const res = await axios.post(requests.postSignUp, {
-        id: id,
+        userId: id,
         password: pw,
       }).then(() => {
         setLoginFlag(true);

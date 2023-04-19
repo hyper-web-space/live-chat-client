@@ -43,7 +43,7 @@ export default function LogIn() {
         // POST 요청은 body에 실어 보냄
         try {
             const res = await axios.post(requests.postLogin, {
-                id: id,
+                userId: id,
                 password: pw,
             });
             //발급된 JWT는 클라이언트 측에서 저장 - 세션 스토리지
