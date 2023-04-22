@@ -2,8 +2,19 @@
 
 .main-page-wrapper{
     display: flex;
+    flex-direction: column;
     height: 100%;
     width: 100%;
     background-color: global.$light-bg-color;
 
+}
+
+.chat-room{
+    width: 100px;
+    height: 100px;
+    background-color: white;
+}
+
+p,h2{
+    margin: 0;
 }

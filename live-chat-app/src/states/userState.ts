@@ -1,11 +1,11 @@
 /*
-id	        string	20자 이하, 중복 불가
+id	      string	20자 이하, 중복 불가
 password	string	비밀번호
  */
 
 import { atom,selector } from 'recoil';
 
-export const userId = atom<string>({
+export const userId = atom({
     key : 'userId',
     default : '',
 });

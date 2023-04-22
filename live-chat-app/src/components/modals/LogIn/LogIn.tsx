@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 import './LogIn.scss';
 import logo_white from '../../../../public/logo-white.png';
 import { useSetRecoilState, useRecoilState } from 'recoil';
@@ -43,9 +43,10 @@ export default function LogIn() {
         // POST 요청은 body에 실어 보냄
         try {
             const res = await axios.post(requests.postLogin, {
-                id: id,
+                userId: id,
                 password: pw,
             });
+            console.log(res.data);
             //발급된 JWT는 클라이언트 측에서 저장 - 세션 스토리지
             auth.setToken('accessToken', res.data.accessToken);
             auth.setToken('refreshToken', res.data.refreshToken);

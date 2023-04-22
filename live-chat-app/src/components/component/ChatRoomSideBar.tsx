@@ -31,8 +31,7 @@ export default function ChatRoomSideBar() {
       setterList.push(setIsActive);
     }
 
-    function handleClick() {
-
+    function handleClick(){
       if(isActive===true){
         setterList.forEach((setter) => {
           setter(true);
@@ -43,7 +42,7 @@ export default function ChatRoomSideBar() {
 
     return (
     <div className='chat-room-wrapper'>
-      <div className={isActive ? 'chat-room' : 'chat-room button-clicked'} onClick={handleClick} >{id} </div>
+      <div className={isActive ? 'chat-room' : 'chat-room button-clicked'} onClick={handleClick}>{id}</div>
       <div className={isActive ? 'chat-room-bar' : 'chat-room-bar bar-clicked'} />
     </div>
     );
@@ -56,7 +55,6 @@ export default function ChatRoomSideBar() {
       <div className='chat-room-list'>
         {listData.map((id) => creareChatRoomButton(id))}
       </div>
-
     </div>
   )
 }
