@@ -2,7 +2,8 @@
 
 .main-page-wrapper{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     height: 100%;
     width: 100%;
     background-color: global.$light-bg-color;
@@ -10,11 +11,66 @@
 }
 
 .chat-room{
-    width: 100px;
-    height: 100px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    width: 20%;
+    height: 30%;
+    min-width: 300px;
+    min-height: 200px;
+    margin : 10px;
     background-color: white;
+    overflow: hidden;
+
+    .room-info-wrapper{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 7px;
+        height: 100%;
+
+        .room-title{
+            font-size: 30px;
+            margin: 0;
+        }
+
+        div{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            .room-people-number{
+                font-size: 20px;
+                margin: 0;    
+            }
+        
+            .room-creator{
+                font-size: 20px;
+                margin: 0;
+            }
+        }
+    }
+
 }
 
-p,h2{
-    margin: 0;
+.chat-room-image{
+    width: 100%;
+    height: 30%;
+    background-color: black;
 }
+
+
+  .image1 {
+    background-image: url('../../../images/chatroom/1.jpg');
+  }
+  
+  .image2 {
+    background-image: url('../../../images/chatroom/2.jpg');
+  }
+
+  .image3 {
+    background-image: url('../../../images/chatroom/3.jpg');
+  }
+
+  .image4 {
+    background-image: url('../../../images/chatroom/4.jpg');
+  }

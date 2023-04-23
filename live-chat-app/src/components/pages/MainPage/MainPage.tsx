@@ -51,25 +51,80 @@ export default function MainPage() {
       numberOfUser: 2,
       privateRoom: true,
     },
+    {
+      chatRoomId: '004',
+      name: 'wog3w',
+      creator: 'hyunbae',
+      numberOfUser: 2,
+      privateRoom: true,
+    },
+    {
+      chatRoomId: '005',
+      name: 'w3dow',
+      creator: 'hyunbae',
+      numberOfUser: 2,
+      privateRoom: true,
+    },
+    {
+      chatRoomId: '006',
+      name: 'wow',
+      creator: 'hyunbddae',
+      numberOfUser: 2,
+      privateRoom: true,
+    },
+    {
+      chatRoomId: '007',
+      name: 'wodw',
+      creator: 'hyunbae',
+      numberOfUser: 2,
+      privateRoom: true,
+    },
+    {
+      chatRoomId: '008',
+      name: 'wow',
+      creator: 'hyunbae',
+      numberOfUser: 2,
+      privateRoom: true,
+    },
+    {
+      chatRoomId: '009',
+      name: 'wow',
+      creator: 'hyunbae',
+      numberOfUser: 2,
+      privateRoom: true,
+    },
   ];
 
+  function djb2(str: string) {
+    let hash = 5381;
+    for (let i = 0; i < str.length; i++) {
+      hash = (hash * 33) + str.charCodeAt(i);
+    }
+    return hash % 4 + 1;
+  }
+
   const renderContents = () => {
-    if(isWelcome){
+    if (isWelcome) {
       return mockList.map((item: ChatRoom) => {
         return <div key={item.chatRoomId} className='chat-room'>
-          <h3>{item.name}</h3>
-          <p>{item.creator}</p>
-          <p>{item.numberOfUser}</p>
+          <div className={`chat-room-image image${djb2(item.name)}`} />
+          <div className='room-info-wrapper'>
+            <h3 className='room-title'>{item.name}</h3>
+            <div>
+              <p className='room-creator'>{item.creator}</p>
+              <p className='room-people-number'>{item.numberOfUser}</p>
+            </div>
+          </div>
         </div>;
       })
     }
 
-    if(isLogin){
-      return <LogIn/>
+    if (isLogin) {
+      return <LogIn />
     }
 
-    return <SignUp/>
-  
+    return <SignUp />
+
   }
 
   return (

@@ -1,4 +1,3 @@
-import React from 'react'
 import './ChatRoomSideBar.scss'
 import logo from '../../../public/logo.png';
 import { useRecoilState , SetterOrUpdater } from 'recoil';
@@ -42,7 +41,7 @@ export default function ChatRoomSideBar() {
 
     return (
     <div className='chat-room-wrapper'>
-      <div className={isActive ? 'chat-room' : 'chat-room button-clicked'} onClick={handleClick}>{id}</div>
+      <div className={isActive ? 'chat-room-icon' : 'chat-room-icon button-clicked'} onClick={handleClick}>{id}</div>
       <div className={isActive ? 'chat-room-bar' : 'chat-room-bar bar-clicked'} />
     </div>
     );
@@ -51,7 +50,7 @@ export default function ChatRoomSideBar() {
   return (
     <div className='chat-room-side-bar-wrapper'>
       <div className='main-button'><img src={logo} alt="logo" /></div>
-      <div className='divier' />
+      <div className='divder' />
       <div className='chat-room-list'>
         {listData.map((id) => creareChatRoomButton(id))}
       </div>
