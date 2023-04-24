@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 import './SignUp.scss'
-import logo_white from '../../../../public/logo-white.png';
+import logo from '../../../images/logos/welcome-logo.png';
 import arrow from '../../../../public/left-arrow.png';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { loginFlag } from '../../../states/flagState';
@@ -39,7 +39,7 @@ export default function SignUp() {
         userId: id,
         password: pw,
       })
-      
+
       setLoginFlag(true);
       alert('회원가입이 완료되었습니다.');
     } catch (error) {
@@ -59,20 +59,21 @@ export default function SignUp() {
       </div>
       <div className='sign-up-frame'>
         <img className='arrow' src={arrow} alt="arrow" onClick={arrowClickHandler} />
-        <img className='logo' src={logo_white} alt="logo-white" />
-
-        <h1>Welcome!</h1>
-        <div className='combo-container'>
-          <p>닉네임/ID</p>
-          <input onChange={idChangeHandler} placeholder='ID' type="text" />
-        </div>
-        <div className='combo-container'>
-          <p>비밀번호</p>
-          <input onChange={passWordChangeHandler} placeholder='Password' type="password" />
-        </div>
-        <div>
-          <button onClick={signUpClickHandler}>회원가입</button>
-        </div>
+        <img className='logo' src={logo} alt="logo-white" />
+        <form onSubmit={signUpClickHandler}>
+          <p>Please Input your ID/PW</p>
+          <div className='combo-container'>
+            <p>Username</p>
+            <input onChange={idChangeHandler} placeholder='ID' type="text" />
+          </div>
+          <div className='combo-container'>
+            <p>Password</p>
+            <input onChange={passWordChangeHandler} placeholder='Password' type="password" />
+          </div>
+          <div>
+            <button type='submit'>SIGNUP</button>
+          </div>
+        </form>
       </div>
     </div>
 

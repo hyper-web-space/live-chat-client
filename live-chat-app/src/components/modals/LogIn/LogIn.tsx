@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 import './LogIn.scss';
-import logo_white from '../../../../public/logo-white.png';
+import logo from '../../../images/logos/main-logo.png';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { loginFlag, welcomeFlag } from '../../../states/flagState';
 import axios from '../../../common/api/axios';
@@ -38,7 +38,9 @@ export default function LogIn() {
         resetState();
     }
 
-    async function logInClickHandler() {
+    async function logInClickHandler(event: React.FormEvent<HTMLFormElement>) {
+
+        event.preventDefault();
         //로그인 정보 제출
         // POST 요청은 body에 실어 보냄
         try {
@@ -56,23 +58,26 @@ export default function LogIn() {
             alert('later make yeajung');
         }
     }
-
+    //<button onClick={signUpClickHandler}>회원가입</button>
     return (
         <div>
             <div className='modal-back-drop'>
             </div>
-            <div className='login-frame' >
-
-                <div>
-                    <img src={logo_white} alt="logo-white" />
+            <form onSubmit={logInClickHandler}>
+                <div className='login-frame' >
+                    <img src={logo} alt="logo-white" />
+                    <div className='p-input-wapper'>
+                        <p>Username</p>
+                        <input id='id-input' placeholder='Please enter your username' type="text" value={id} onChange={handleChange} />
+                    </div>
+                    <div className='p-input-wapper'>
+                        <p>Password</p>
+                        <input id='pw-input' placeholder='Please enter your password' type="password" value={pw} onChange={handleChange} />
+                    </div>
+                    <button className='login-button' type='submit'>LOGIN</button>
+                    <div className='sign-up-button' onClick={signUpClickHandler}>Create an account!</div>
                 </div>
-                <input id='id-input' placeholder='ID' type="text" value={id} onChange={handleChange} />
-                <input id='pw-input' placeholder='Password' type="password" value={pw} onChange={handleChange} />
-                <div>
-                    <button onClick={logInClickHandler}>로그인</button>
-                    <button onClick={signUpClickHandler}>회원가입</button>
-                </div>
-            </div>
+            </form>
         </div>
 
     )
