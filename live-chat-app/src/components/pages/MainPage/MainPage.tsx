@@ -1,11 +1,15 @@
 import './MainPage.scss';
 import axios from '../../../common/api/axios';
 import requests from '../../../common/api/requests';
+import session from '../../../common/auth/session';
+
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { loginFlag, welcomeFlag } from '../../../states/flagState';
 import { chatRoomList } from '../../../states/chatRoomState';
+import { userId } from '../../../states/userState';
 import LogIn from '../../modals/LogIn/LogIn';
 import SignUp from '../../modals/SignUp/SignUp';
+import { Link } from 'react-router-dom';
 
 export interface ChatRoom {
   chatRoomId: string;
@@ -16,84 +20,24 @@ export interface ChatRoom {
 }
 
 export default function MainPage() {
+
+  const user_id = useRecoilValue(userId);
   const isLogin = useRecoilValue(loginFlag);
   const isWelcome = useRecoilValue(welcomeFlag);
+  
   const [chatList, setChatList] = useRecoilState<ChatRoom[]>(chatRoomList);
-
+  const token = session.getToken('accessToken');
   const getChatList = async () => {
     try {
-      const res = await axios.get<ChatRoom[]>(requests.getChatList);
+      const res = await axios.get<ChatRoom[]>(requests.getChatList,
+        {headers: {'AUTHORIZATION': `Bearer ${token}` ,user_id: user_id}}
+      );
       setChatList(res.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const mockList: ChatRoom[] = [
-    {
-      chatRoomId: '001',
-      name: 'legendary',
-      creator: 'hyunbae',
-      numberOfUser: 3,
-      privateRoom: false,
-    },
-    {
-      chatRoomId: '002',
-      name: 'king',
-      creator: 'chung',
-      numberOfUser: 3,
-      privateRoom: false,
-    },
-    {
-      chatRoomId: '003',
-      name: 'wow',
-      creator: 'hyunbae',
-      numberOfUser: 2,
-      privateRoom: true,
-    },
-    {
-      chatRoomId: '004',
-      name: 'wog3w',
-      creator: 'hyunbae',
-      numberOfUser: 2,
-      privateRoom: true,
-    },
-    {
-      chatRoomId: '005',
-      name: 'w3dow',
-      creator: 'hyunbae',
-      numberOfUser: 2,
-      privateRoom: true,
-    },
-    {
-      chatRoomId: '006',
-      name: 'wow',
-      creator: 'hyunbddae',
-      numberOfUser: 2,
-      privateRoom: true,
-    },
-    {
-      chatRoomId: '007',
-      name: 'wodw',
-      creator: 'hyunbae',
-      numberOfUser: 2,
-      privateRoom: true,
-    },
-    {
-      chatRoomId: '008',
-      name: 'wow',
-      creator: 'hyunbae',
-      numberOfUser: 2,
-      privateRoom: true,
-    },
-    {
-      chatRoomId: '009',
-      name: 'wow',
-      creator: 'hyunbae',
-      numberOfUser: 2,
-      privateRoom: true,
-    },
-  ];
 
   function djb2(str: string) {
     let hash = 5381;
@@ -105,17 +49,20 @@ export default function MainPage() {
 
   const renderContents = () => {
     if (isWelcome) {
-      return mockList.map((item: ChatRoom) => {
-        return <div key={item.chatRoomId} className='chat-room'>
-          <div className={`chat-room-image image${djb2(item.name)}`} />
-          <div className='room-info-wrapper'>
-            <h3 className='room-title'>{item.name}</h3>
-            <div>
-              <p className='room-creator'>{item.creator}</p>
-              <p className='room-people-number'>{item.numberOfUser}</p>
+      return chatList.map((item: ChatRoom) => {
+        return (
+          <Link to={'/chat-room'} key={item.chatRoomId}>
+            <div key={item.chatRoomId} className='chat-room'>
+              <div className={`chat-room-image image${djb2(item.name)}`} />
+              <div className='room-info-wrapper'>
+                <h3 className='room-title'>{item.name}</h3>
+                <div>
+                  <p className='room-creator'>{item.creator}</p>
+                  <p className='room-people-number'>{item.numberOfUser}</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>;
+          </Link>);
       })
     }
 

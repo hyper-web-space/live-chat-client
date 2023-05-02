@@ -9,14 +9,7 @@
     background-color: global.$strong-bg-color;
 }
 
-.divder {
-    width: 40px;
-    height: 2px;
-    background-color: global.$light-bg-color;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    border-radius: 15px;
-}
+
 
 .main-button {
     //rounded violet button
@@ -42,25 +35,24 @@
 
 .chat-room-list {
     width: 100%;
+
+    .divder {
+        width: 40px;
+        height: 2px;
+        background-color: global.$light-bg-color;
+        margin: 5px;
+        border-radius: 15px;
+    }
     .chat-room-wrapper {
         display: flex;
         position: relative;
         width: 100%;
         justify-content: center;
-        .chat-room-bar {
-            position: absolute;
-            top: 50%;
-            left: 0%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            height: 0px;
-            width: 8px;
-            border-top-right-radius: 8px;
-            border-bottom-right-radius: 8px;
-            transition: 0.2s ease-in;
-        }
+        
+
         .chat-room-icon {
             //circle button
+            overflow: hidden;
             width: 46px;
             height: 46px;
             border-radius: 50%;
@@ -69,6 +61,21 @@
             margin-top: 5px;
             margin-bottom: 5px;
             transition: 0.2s ease-in;
+            color: white;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size-adjust: 2;
+            img {
+                width: 30px;
+            }
+
+            p{ 
+                margin: 0;
+                display: block;
+                white-space: nowrap;
+            }
 
             //when clicked
             &:active {
@@ -77,7 +84,7 @@
             }
 
             &:hover {
-                background-color: white;
+                background-color: purple;
                 transition: 0.2s ease-in;
                 border-radius: 15px;
 
@@ -90,13 +97,29 @@
     }
 }
 
+.chat-room-bar {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    height: 0px;
+    width: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    transition: 0.2s ease-in;
+
+}
+
 .bar-clicked {
     height: 40px !important;
     transition: 0.2s ease-in;
 }
 
 .button-clicked {
-    background-color: white !important;
+    background-color: purple !important;
     border-radius: 15px !important;
     transition: 0.2s ease-in;
 }
+
+
