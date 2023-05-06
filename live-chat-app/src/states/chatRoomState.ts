@@ -1,10 +1,20 @@
 
-import { atom } from 'recoil';
+import { atom,SetterOrUpdater } from 'recoil';
 
 import { ChatRoom } from '../components/pages/MainPage/MainPage';
 
+export const chatRoomCount = atom<number>({
+    key : 'chatRoomCount',
+    default : 0,
+});
+
 export const chatRoomList = atom<ChatRoom[]>({
     key : 'chatRoomList',
+    default : [],
+});
+
+export const myChatRoomList = atom<ChatRoom[]>({
+    key : 'myChatRoomList',
     default : [],
 });
 
@@ -23,3 +33,7 @@ export const createChatRoomPrivateYn = atom<boolean>({
     default : false,
 });
 
+export const chatRoomActiveState = atom<SetterOrUpdater<boolean>[]>({
+    key : 'chatRoomActiveState',
+    default : [],
+});

@@ -17,7 +17,6 @@ export const welcomeFlag = atom({
     default : false,
 });
 
-
 export const dynamicBtnClass = atomFamily<boolean, string>({
     key: 'dynamicBtnClass',
     default: true,

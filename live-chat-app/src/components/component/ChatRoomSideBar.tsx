@@ -1,37 +1,57 @@
 import './ChatRoomSideBar.scss'
+import axios from '../../common/api/axios';
+import requests from '../../common/api/requests';
+import auth from '../../common/auth/session';
 import logo from '../../../public/logo.png';
 import plus from '../../images/components/plus.png'
-import { useRecoilState, SetterOrUpdater } from 'recoil';
-import { dynamicBtnClass,createChatRoomFlag } from '../../states/flagState';
+import { useRecoilState, SetterOrUpdater, useRecoilValue } from 'recoil';
+import { dynamicBtnClass, createChatRoomFlag } from '../../states/flagState';
+import { myChatRoomList } from '../../states/chatRoomState';
+import { userId } from '../../states/userState';
 import { Link } from 'react-router-dom';
+
+
+export interface ChatRooms {
+  chatRooms: ChatRoom[];
+}
+
+export interface ChatRoom {
+  chatRoomId: string;
+  name: string;
+  creator: string;
+  numberOfUser: number;
+  privateRoom: boolean;
+  createdAt: string;
+  creatRoomId: string;
+}
 
 export default function ChatRoomSideBar() {
 
-  /*
-  @GET /chatRoom
-  [
-  {
-    'chatRoomId': 'string',
-    'name': 'string',
-    'creator': 'string',
-    'numberOfUser': 'number',
-    'privateRoom': 'boolean'
-  },
-  ...
-  ]
-  */
-  /*
-  [v] 지금 내가 어떻게 클릭 풀리게 하는지 로직 다시 파악
-     - state각자 적용, list에 넣어서 관리.
-  [] 메인버튼 적용 가능한지 파악.
-  []
-  []
-  []
-  */
-  const listData = ['모각코', '광주3인방', 'lol', 'king'];
+  const user_id = useRecoilValue(userId);
   const setterList: Array<SetterOrUpdater<boolean>> = [];
   const [chatRoomCreateFlag, setChatRoomCreateFlag] = useRecoilState(createChatRoomFlag);
+  const [myChatRooms, setMyChatRooms] = useRecoilState<ChatRoom[]>(myChatRoomList);
 
+
+
+  async function getMyChatRooms(offset: number, limit: number) {
+    const token = auth.getToken('accessToken');
+
+    try {
+      const res = await axios.get(requests.getChatList,
+        {
+          params: {
+            offset: offset,
+            limit: limit,
+            user_id : user_id,
+          },
+          headers: { 'AUTHORIZATION': `Bearer ${token}` }
+        });
+      setMyChatRooms(res.data.chatRooms);
+    } catch (error) {
+      alert(error);
+    }
+  }
   /**
    * id를 받아서 해당 id의 chatroom button component를 반환
    * @param id
@@ -81,11 +101,10 @@ export default function ChatRoomSideBar() {
         setIsActive(!isActive);
       }
     }
-
     return (
-      <div className='chat-room-wrapper'>
-        <div className={isActive ? 'chat-room-icon' : 'chat-room-icon button-clicked'} onClick={handleClick}><p>{id}</p></div>
-        <div className={isActive ? 'chat-room-bar' : 'chat-room-bar bar-clicked'} />
+      <div key={id + '-wrapper'} className='chat-room-wrapper'>
+        <div key={id} className={isActive ? 'chat-room-icon' : 'chat-room-icon button-clicked'} onClick={handleClick}><p>{id}</p></div>
+        <div key={id + '-bar'} className={isActive ? 'chat-room-bar' : 'chat-room-bar bar-clicked'} />
       </div>
     );
   }
@@ -93,7 +112,7 @@ export default function ChatRoomSideBar() {
   function createChatRoomBtn() {
 
     function handleClick() {
-      if(chatRoomCreateFlag!==false){
+      if (chatRoomCreateFlag !== false) {
         setChatRoomCreateFlag(false);
       }
     }
@@ -110,7 +129,7 @@ export default function ChatRoomSideBar() {
       <div className='chat-room-list'>
         {createMainButton()}
         <div className='divder' />
-        {listData.map((id) => creareChatRoomButton(id))}
+        {myChatRooms.map((element) => creareChatRoomButton(element.chatRoomId))}
         {createChatRoomBtn()}
       </div>
     </div>

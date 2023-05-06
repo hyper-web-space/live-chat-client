@@ -16,7 +16,7 @@ export default function CreateChatRoom() {
   const [, setCreateChatRoom] = useRecoilState(createChatRoomFlag);
   const [chatRoomName, setChatRoomName] = useRecoilState(createChatRoomName);
   const [chatRoomPassWord, setChatRoomPassWord] = useRecoilState(createChatRoomPassWord);
-  const [, setChatRoomPrivateYn] = useRecoilState(createChatRoomPrivateYn);
+  const [chatRoomPrivateYn, setChatRoomPrivateYn] = useRecoilState(createChatRoomPrivateYn);
   const user_id = useRecoilValue(userId);
 
   async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
@@ -24,19 +24,23 @@ export default function CreateChatRoom() {
     const token = auth.getToken('accessToken');
 
     try {
-      await axios.post(requests.createChatRoom,
+      await axios.post(requests.chatRooms,
         {
           name: chatRoomName,
           password: chatRoomPassWord,
-        },{headers : { 'AUTHORIZATION': `Bearer ${token}`
-        , user_id: user_id } });
+        }, {
+        headers: {
+          'AUTHORIZATION': `Bearer ${token}`
+          , user_id: user_id
+        }
+      });
 
       setChatRoomName('');
       setChatRoomPassWord('');
       setCreateChatRoom(false);
       setChatRoomPrivateYn(false);
       setSignUpFlag(true);
-      
+
     } catch (error) {
 
       alert(error);
@@ -48,7 +52,7 @@ export default function CreateChatRoom() {
 
   function returnSucessWindow() {
 
-    return(
+    return (
       <div className='create-chat-room-box'>
         <h1>축하합니다!</h1>
         <div onClick={() => { setCreateChatRoom(true) }}>나가기</div>
@@ -57,7 +61,7 @@ export default function CreateChatRoom() {
       </div>
     )
   }
-  
+
   function returnChatRoomContents() {
     return (
       <div className='create-chat-room-box'>
@@ -74,25 +78,25 @@ export default function CreateChatRoom() {
             value={chatRoomName}
             type="text" />
           <p></p>
-          <label>
-            <input
-              checked
-              onChange={() => {
-                setChatRoomPrivateYn(false);
-              }}
-              type="radio"
-            />
-            공개
-          </label>
-          <label>
-            <input
-              onChange={() => {
-                setChatRoomPrivateYn(true);
-              }}
-              type="radio"
-            />
-            비공개
-          </label>
+          <div>
+            <label>
+              <input
+                type="radio"
+                checked={chatRoomPrivateYn === false}
+                onClick={() => { setChatRoomPrivateYn(false) }}
+              />
+              공개
+            </label>
+            <label>
+              <input
+                type="radio"
+                checked={chatRoomPrivateYn === true}
+                onClick={() => { setChatRoomPrivateYn(true) }}
+                
+              />
+              비공개
+            </label>
+          </div>
           <p>비밀번호</p>
           <input
             onChange={(e) => {
@@ -111,7 +115,7 @@ export default function CreateChatRoom() {
     <div>
       <div className='modal-back-drop'>
       </div>
-      {signUpFlag? returnSucessWindow() : returnChatRoomContents()}
+      {signUpFlag ? returnSucessWindow() : returnChatRoomContents()}
     </div>
   )
 }

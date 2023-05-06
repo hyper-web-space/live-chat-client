@@ -5,11 +5,15 @@ import session from '../../../common/auth/session';
 
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { loginFlag, welcomeFlag } from '../../../states/flagState';
-import { chatRoomList } from '../../../states/chatRoomState';
+import { chatRoomList, chatRoomCount } from '../../../states/chatRoomState';
 import { userId } from '../../../states/userState';
 import LogIn from '../../modals/LogIn/LogIn';
 import SignUp from '../../modals/SignUp/SignUp';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+
+export interface ChatRooms {
+  chatRooms: ChatRoom[];
+}
 
 export interface ChatRoom {
   chatRoomId: string;
@@ -17,6 +21,8 @@ export interface ChatRoom {
   creator: string;
   numberOfUser: number;
   privateRoom: boolean;
+  createdAt: string;
+  creatRoomId: string;
 }
 
 export default function MainPage() {
@@ -24,21 +30,38 @@ export default function MainPage() {
   const user_id = useRecoilValue(userId);
   const isLogin = useRecoilValue(loginFlag);
   const isWelcome = useRecoilValue(welcomeFlag);
-  
+
+  const [roomCount,] = useRecoilState<number>(chatRoomCount);
   const [chatList, setChatList] = useRecoilState<ChatRoom[]>(chatRoomList);
   const token = session.getToken('accessToken');
-  const getChatList = async () => {
+
+  //query chat list
+  const getChatList = async (offset: number, limit: number): Promise<void> => {
+
+    if (!session.checkToken('accessToken')) {
+      return;
+    }
+
     try {
-      const res = await axios.get<ChatRoom[]>(requests.getChatList,
-        {headers: {'AUTHORIZATION': `Bearer ${token}` ,user_id: user_id}}
+      console.log('token', token);
+      console.log('userid', user_id);
+      const res = await axios.get<ChatRooms>(requests.chatRooms,
+        {
+          params: {
+            offset: offset,
+            limit: limit
+          },
+          headers: { 'AUTHORIZATION': `Bearer ${token}` }
+        }
       );
-      setChatList(res.data);
+      console.log(res.data);
+      setChatList(res.data.chatRooms);
     } catch (error) {
       console.log(error);
     }
   };
 
-
+  //random image generator func
   function djb2(str: string) {
     let hash = 5381;
     for (let i = 0; i < str.length; i++) {
@@ -47,22 +70,28 @@ export default function MainPage() {
     return hash % 4 + 1;
   }
 
+  //load chat list
+  useEffect(() => {
+    getChatList(roomCount, 10);
+  }, []);
+
   const renderContents = () => {
     if (isWelcome) {
       return chatList.map((item: ChatRoom) => {
         return (
-          <Link to={'/chat-room'} key={item.chatRoomId}>
-            <div key={item.chatRoomId} className='chat-room'>
-              <div className={`chat-room-image image${djb2(item.name)}`} />
-              <div className='room-info-wrapper'>
-                <h3 className='room-title'>{item.name}</h3>
-                <div>
-                  <p className='room-creator'>{item.creator}</p>
-                  <p className='room-people-number'>{item.numberOfUser}</p>
-                </div>
+          <div key={item.chatRoomId} className={'chat-room'}>
+            <div className={`chat-room-image color${djb2(item.name)}`} >
+              <div className={item.privateRoom ? 'private-chat' : 'public-chat'} />
+            </div>
+            <div className='room-info-wrapper'>
+              <h3 className='room-title'>{item.name}</h3>
+              <div>
+                <div className='user-icon' />
+                <p className='room-people-number'>{item.numberOfUser}</p>
               </div>
             </div>
-          </Link>);
+          </div>
+        );
       })
     }
 

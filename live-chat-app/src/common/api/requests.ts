@@ -2,7 +2,7 @@ const requests = {
     postLogin   : '/users/signin',
     postSignUp  : '/users/signup',
     getChatList : '/chatrooms/connected',
-    createChatRoom : '/chatrooms',
+    chatRooms : '/chatrooms',
 }
 
 export default requests;
