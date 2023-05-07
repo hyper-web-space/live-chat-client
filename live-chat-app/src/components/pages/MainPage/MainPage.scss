@@ -1,9 +1,106 @@
-@use '../../../scss/global.scss';
+@use "../../../scss/global.scss";
 
-.main-page-wrapper{
+.main-page-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+  background-color: global.$light-bg-color;
+}
+
+.chat-room {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  border-radius: 10px;
+  width: 300px;
+  height: 60px;
+  margin: 10px;
+  background-color: #F0EEED;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+
+  .room-info-wrapper {
+    position: relative;
     display: flex;
-    height: 100%;
-    width: 100%;
-    background-color: global.$light-bg-color;
+    width: 210px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px;
 
+    .room-title {
+      font-size: 23px;
+      margin: 0;
+    }
+
+    div {
+      display: flex;
+      align-items: flex-end;
+      height: 60px;
+      right: 0;
+      bottom: 0;
+      margin-bottom: 10px;
+      .room-people-number {
+        font-size: 20px;
+        line-height: 20px;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .user-icon {
+        background-image: url("../../../images/chatroom/user.png");
+        background-size: 100%;
+        font-size: 20px;
+        width: 16px;
+        height: 16px;
+        margin-bottom: 1px;
+      }
+    }
+  }
+}
+
+.chat-room-image{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  margin: 10px;
+  border-radius: 100%;
+}
+
+
+.private-chat {
+  background-image: url("../../../images/chatroom/private-chat.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
+
+.public-chat {
+  background-image: url("../../../images/chatroom/public-chat.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px;
+}
+
+.color1 {
+  background-color: #ad7be9;
+}
+
+.color2 {
+  background-color: #609ea2;
+}
+
+.color3 {
+  background-color: #c92c6d;
+}
+
+.color4 {
+  background-color: #658864;
 }

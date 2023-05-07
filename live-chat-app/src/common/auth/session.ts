@@ -13,6 +13,14 @@ const session = {
         /*
         access token 만료시 refresh
         */
+    },
+
+    checkToken(tokenName:string){
+        if (sessionStorage.getItem(tokenName) === null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }
