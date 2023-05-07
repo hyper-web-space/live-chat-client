@@ -33,7 +33,6 @@ export default function ChatRoomSideBar() {
   const [myChatRooms, setMyChatRooms] = useRecoilState<ChatRoom[]>(myChatRoomList);
 
 
-
   async function getMyChatRooms(offset: number, limit: number) {
     const token = auth.getToken('accessToken');
 
@@ -85,30 +84,6 @@ export default function ChatRoomSideBar() {
     )
   }
 
-  function creareChatRoomButton(id: string) {
-
-    const [isActive, setIsActive] = useRecoilState(dynamicBtnClass(id));
-
-    if (!setterList.includes(setIsActive)) {
-      setterList.push(setIsActive);
-    }
-
-    function handleClick() {
-      if (isActive === true) {
-        setterList.forEach((setter) => {
-          setter(true);
-        })
-        setIsActive(!isActive);
-      }
-    }
-    return (
-      <div key={id + '-wrapper'} className='chat-room-wrapper'>
-        <div key={id} className={isActive ? 'chat-room-icon' : 'chat-room-icon button-clicked'} onClick={handleClick}><p>{id}</p></div>
-        <div key={id + '-bar'} className={isActive ? 'chat-room-bar' : 'chat-room-bar bar-clicked'} />
-      </div>
-    );
-  }
-
   function createChatRoomBtn() {
 
     function handleClick() {
@@ -129,7 +104,7 @@ export default function ChatRoomSideBar() {
       <div className='chat-room-list'>
         {createMainButton()}
         <div className='divder' />
-        {myChatRooms.map((element) => creareChatRoomButton(element.chatRoomId))}
+
         {createChatRoomBtn()}
       </div>
     </div>

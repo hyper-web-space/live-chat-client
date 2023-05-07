@@ -13,6 +13,7 @@ export const chatRoomList = atom<ChatRoom[]>({
     default : [],
 });
 
+
 export const myChatRoomList = atom<ChatRoom[]>({
     key : 'myChatRoomList',
     default : [],
@@ -33,7 +34,12 @@ export const createChatRoomPrivateYn = atom<boolean>({
     default : false,
 });
 
-export const chatRoomActiveState = atom<SetterOrUpdater<boolean>[]>({
-    key : 'chatRoomActiveState',
+export const chatRoomActiveStateList = atom<SetterOrUpdater<boolean>[]>({
+    key : 'chatRoomActiveStateList',
+    default : [],
+});
+
+export const allChatRoomList = atom<ChatRoom[]>({
+    key : 'allChatRoomList',
     default : [],
 });

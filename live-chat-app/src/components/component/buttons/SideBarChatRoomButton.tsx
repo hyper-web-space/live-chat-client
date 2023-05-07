@@ -1,23 +1,22 @@
-import React from 'react'
-import { useRecoilState } from 'recoil';
+import { useRecoilState, SetterOrUpdater } from 'recoil';
 import { dynamicBtnClass } from '../../../states/flagState';
+import {chatRoomActiveStateList} from '../../../states/chatRoomState';
 
 
 export default function SideBarChatRoomButton(id: string) {
 
 
-
-
   const [isActive, setIsActive] = useRecoilState(dynamicBtnClass(id));
-  const
+  const [activeChatRoomList, setActiveChatRoomList] = useRecoilState(chatRoomActiveStateList);
 
-  if (!setterList.includes(setIsActive)) {
-    setterList.push(setIsActive);
+  if (!activeChatRoomList.includes(setIsActive)) {
+    const newList:SetterOrUpdater<boolean>[] = [...activeChatRoomList, setIsActive];
+    setActiveChatRoomList(newList);
   }
 
   function handleClick() {
     if (isActive === true) {
-      setterList.forEach((setter) => {
+      activeChatRoomList.forEach((setter) => {
         setter(true);
       })
       setIsActive(!isActive);

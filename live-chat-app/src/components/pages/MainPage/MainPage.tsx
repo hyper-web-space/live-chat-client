@@ -35,6 +35,9 @@ export default function MainPage() {
   const [chatList, setChatList] = useRecoilState<ChatRoom[]>(chatRoomList);
   const token = session.getToken('accessToken');
 
+  console.log('mockList'+ chatList);
+  
+
   //query chat list
   const getChatList = async (offset: number, limit: number): Promise<void> => {
 
@@ -43,8 +46,6 @@ export default function MainPage() {
     }
 
     try {
-      console.log('token', token);
-      console.log('userid', user_id);
       const res = await axios.get<ChatRooms>(requests.chatRooms,
         {
           params: {
@@ -54,8 +55,8 @@ export default function MainPage() {
           headers: { 'AUTHORIZATION': `Bearer ${token}` }
         }
       );
-      console.log(res.data);
       setChatList(res.data.chatRooms);
+      console.log('initList'+ chatList);
     } catch (error) {
       console.log(error);
     }
@@ -73,7 +74,7 @@ export default function MainPage() {
   //load chat list
   useEffect(() => {
     getChatList(roomCount, 10);
-  }, []);
+  }, [isWelcome]);
 
   const renderContents = () => {
     if (isWelcome) {
