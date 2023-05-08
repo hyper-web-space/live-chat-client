@@ -1,0 +1,108 @@
+@use "../../../scss/global";
+
+.chat-room-side-bar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 80px;
+    background-color: global.$strong-bg-color;
+}
+
+.main-button {
+    //rounded violet button
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: none;
+    background-color: global.$light-bg-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        background-color: white;
+        transition: 0.3s ease-in;
+        border-radius: 15px;
+    }
+
+    img {
+        width: 30px;
+    }
+}
+
+.chat-room-wrapper {
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: center;
+
+    .chat-room-icon {
+        //circle button
+        overflow: hidden;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        border: none;
+        background-color: global.$light-bg-color;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        transition: 0.2s ease-in;
+        color: white;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size-adjust: 2;
+        img {
+            width: 30px;
+        }
+
+        p {
+            margin: 0;
+            display: block;
+            white-space: nowrap;
+        }
+
+        //when clicked
+        &:active {
+            // move a little bit down
+            transform: translateY(2px);
+        }
+
+        &:hover {
+            background-color: purple;
+            transition: 0.2s ease-in;
+            border-radius: 15px;
+
+            ~ .chat-room-bar {
+                transition: 0.3s ease-in;
+                height: 25px;
+            }
+        }
+    }
+}
+
+.chat-room-bar {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    height: 0px;
+    width: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    transition: 0.2s ease-in;
+}
+
+.bar-clicked {
+    height: 40px !important;
+    transition: 0.2s ease-in;
+}
+
+.button-clicked {
+    background-color: purple !important;
+    border-radius: 15px !important;
+    transition: 0.2s ease-in;
+}

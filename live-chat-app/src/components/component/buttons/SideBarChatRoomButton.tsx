@@ -1,9 +1,10 @@
+import './SideBarChatRoomButton.scss'
 import { useRecoilState, SetterOrUpdater } from 'recoil';
 import { dynamicBtnClass } from '../../../states/flagState';
 import {chatRoomActiveStateList} from '../../../states/chatRoomState';
 
 
-export default function SideBarChatRoomButton(id: string) {
+export default function SideBarChatRoomButton({id,name} : {id:string,name:string}) : JSX.Element {
 
 
   const [isActive, setIsActive] = useRecoilState(dynamicBtnClass(id));
@@ -26,7 +27,7 @@ export default function SideBarChatRoomButton(id: string) {
 
   return (
     <div key={id + '-wrapper'} className='chat-room-wrapper'>
-      <div key={id} className={isActive ? 'chat-room-icon' : 'chat-room-icon button-clicked'} onClick={handleClick}><p>{id}</p></div>
+      <div key={id} className={isActive ? 'chat-room-icon' : 'chat-room-icon button-clicked'} onClick={handleClick}><p>{name}</p></div>
       <div key={id + '-bar'} className={isActive ? 'chat-room-bar' : 'chat-room-bar bar-clicked'} />
     </div>
   )

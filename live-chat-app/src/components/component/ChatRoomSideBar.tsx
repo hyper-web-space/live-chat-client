@@ -9,7 +9,8 @@ import { dynamicBtnClass, createChatRoomFlag } from '../../states/flagState';
 import { myChatRoomList } from '../../states/chatRoomState';
 import { userId } from '../../states/userState';
 import { Link } from 'react-router-dom';
-
+import { useEffect } from 'react';
+import SideBarChatRoomButton from './buttons/SideBarChatRoomButton';
 
 export interface ChatRooms {
   chatRooms: ChatRoom[];
@@ -32,6 +33,9 @@ export default function ChatRoomSideBar() {
   const [chatRoomCreateFlag, setChatRoomCreateFlag] = useRecoilState(createChatRoomFlag);
   const [myChatRooms, setMyChatRooms] = useRecoilState<ChatRoom[]>(myChatRoomList);
 
+  useEffect(() => {
+    getMyChatRooms(0, 10);
+  }, []);
 
   async function getMyChatRooms(offset: number, limit: number) {
     const token = auth.getToken('accessToken');
@@ -42,10 +46,11 @@ export default function ChatRoomSideBar() {
           params: {
             offset: offset,
             limit: limit,
-            user_id : user_id,
+            user_id: user_id,
           },
           headers: { 'AUTHORIZATION': `Bearer ${token}` }
         });
+      console.log(res.data.chatRooms);
       setMyChatRooms(res.data.chatRooms);
     } catch (error) {
       alert(error);
@@ -104,7 +109,9 @@ export default function ChatRoomSideBar() {
       <div className='chat-room-list'>
         {createMainButton()}
         <div className='divder' />
-
+          {myChatRooms.map((chatRoom) => (
+            <SideBarChatRoomButton name={chatRoom.name} id={chatRoom.chatRoomId} key={chatRoom.chatRoomId} />
+          ))}
         {createChatRoomBtn()}
       </div>
     </div>
