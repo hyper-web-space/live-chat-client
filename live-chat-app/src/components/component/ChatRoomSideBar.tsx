@@ -4,9 +4,9 @@ import requests from '../../common/api/requests';
 import auth from '../../common/auth/session';
 import logo from '../../../public/logo.png';
 import plus from '../../images/components/plus.png'
-import { useRecoilState, SetterOrUpdater, useRecoilValue } from 'recoil';
-import { dynamicBtnClass, createChatRoomFlag } from '../../states/flagState';
-import { myChatRoomList } from '../../states/chatRoomState';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { dynamicBtnClass, createChatRoomFlag, welcomeFlag } from '../../states/flagState';
+import { myChatRoomList,chatRoomActiveStateList } from '../../states/chatRoomState';
 import { userId } from '../../states/userState';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -29,13 +29,14 @@ export interface ChatRoom {
 export default function ChatRoomSideBar() {
 
   const user_id = useRecoilValue(userId);
-  const setterList: Array<SetterOrUpdater<boolean>> = [];
+  const isWelcome = useRecoilValue(welcomeFlag);
   const [chatRoomCreateFlag, setChatRoomCreateFlag] = useRecoilState(createChatRoomFlag);
   const [myChatRooms, setMyChatRooms] = useRecoilState<ChatRoom[]>(myChatRoomList);
+  const [activeChatRoomList, setActiveChatRoomList] = useRecoilState(chatRoomActiveStateList);
 
   useEffect(() => {
     getMyChatRooms(0, 10);
-  }, []);
+  }, [isWelcome]);
 
   async function getMyChatRooms(offset: number, limit: number) {
     const token = auth.getToken('accessToken');
@@ -56,23 +57,23 @@ export default function ChatRoomSideBar() {
       alert(error);
     }
   }
+  
   /**
    * id를 받아서 해당 id의 chatroom button component를 반환
    * @param id
    * @returns chatroom button component [wrapper, icon, bar]
    */
-
   function createMainButton() {
 
     const [isActive, setIsActive] = useRecoilState(dynamicBtnClass('main'));
 
-    if (!setterList.includes(setIsActive)) {
-      setterList.push(setIsActive);
+    if (!activeChatRoomList.includes(setIsActive)) {
+      setActiveChatRoomList([...activeChatRoomList, setIsActive])
     }
 
     function handleClick() {
       if (isActive === true) {
-        setterList.forEach((setter) => {
+        activeChatRoomList.forEach((setter) => {
           setter(true);
         })
         setIsActive(!isActive);
@@ -89,6 +90,11 @@ export default function ChatRoomSideBar() {
     )
   }
 
+  /**
+   * createChatRoomBtn component를 반환
+   * @param 
+   * @returns create chat-room button [wrapper, icon, bar]
+   */
   function createChatRoomBtn() {
 
     function handleClick() {

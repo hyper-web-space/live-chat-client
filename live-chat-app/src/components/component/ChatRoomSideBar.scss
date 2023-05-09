@@ -9,30 +9,6 @@
     background-color: global.$strong-bg-color;
 }
 
-
-
-.main-button {
-    //rounded violet button
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    border: none;
-    background-color: global.$light-bg-color;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:hover {
-        background-color: white;
-        transition: 0.3s ease-in;
-        border-radius: 15px;
-    }
-
-    img {
-        width: 30px;
-    }
-}
-
 .chat-room-list {
     width: 100%;
 
@@ -41,6 +17,8 @@
         height: 2px;
         background-color: global.$light-bg-color;
         margin: 5px;
+        margin-left: 13px;
+        margin-top: 10px;
         border-radius: 15px;
     }
     .chat-room-wrapper {
@@ -48,7 +26,6 @@
         position: relative;
         width: 100%;
         justify-content: center;
-        
 
         .chat-room-icon {
             //circle button
@@ -71,7 +48,7 @@
                 width: 30px;
             }
 
-            p{ 
+            p {
                 margin: 0;
                 display: block;
                 white-space: nowrap;
@@ -94,6 +71,35 @@
                 }
             }
         }
+        a {
+            .main-button {
+                width: 46px;
+                height: 46px;
+                border-radius: 50%;
+                border: none;
+                background-color: global.$light-bg-color;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img {
+                    width: 30px;
+                }
+            }
+
+            &:hover {
+                .main-button {
+                    background-color: purple;
+                    transition: 0.3s ease-in;
+                    border-radius: 15px;
+                }
+
+                ~ .chat-room-bar {
+                    transition: 0.3s ease-in;
+                    height: 25px;
+                }
+            }
+        }
     }
 }
 
@@ -108,7 +114,6 @@
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     transition: 0.2s ease-in;
-
 }
 
 .bar-clicked {
@@ -121,5 +126,3 @@
     border-radius: 15px !important;
     transition: 0.2s ease-in;
 }
-
-

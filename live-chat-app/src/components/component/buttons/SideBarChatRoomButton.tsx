@@ -1,4 +1,3 @@
-import './SideBarChatRoomButton.scss'
 import { useRecoilState, SetterOrUpdater } from 'recoil';
 import { dynamicBtnClass } from '../../../states/flagState';
 import {chatRoomActiveStateList} from '../../../states/chatRoomState';
