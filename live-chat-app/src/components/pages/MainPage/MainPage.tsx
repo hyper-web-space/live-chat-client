@@ -35,8 +35,11 @@ export default function MainPage() {
   const [chatList, setChatList] = useRecoilState<ChatRoom[]>(chatRoomList);
   const token = session.getToken('accessToken');
 
-  console.log('mockList'+ chatList);
-  
+  //load chat list
+  useEffect(() => {
+    getChatList(roomCount, 10);
+  }, [isWelcome]);
+
 
   //query chat list
   const getChatList = async (offset: number, limit: number): Promise<void> => {
@@ -56,11 +59,12 @@ export default function MainPage() {
         }
       );
       setChatList(res.data.chatRooms);
-      console.log('initList'+ chatList);
+
     } catch (error) {
       console.log(error);
     }
-  };
+  }
+
 
   //random image generator func
   function djb2(str: string) {
@@ -70,12 +74,6 @@ export default function MainPage() {
     }
     return hash % 4 + 1;
   }
-
-  //load chat list
-  useEffect(() => {
-    getChatList(roomCount, 10);
-  }, [isWelcome]);
-
   const renderContents = () => {
     if (isWelcome) {
       return chatList.map((item: ChatRoom) => {

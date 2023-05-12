@@ -2,15 +2,16 @@ import './ChatRoomSideBar.scss'
 import axios from '../../common/api/axios';
 import requests from '../../common/api/requests';
 import auth from '../../common/auth/session';
-import logo from '../../../public/logo.png';
-import plus from '../../images/components/plus.png'
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { dynamicBtnClass, createChatRoomFlag, welcomeFlag } from '../../states/flagState';
-import { myChatRoomList,chatRoomActiveStateList } from '../../states/chatRoomState';
+import { welcomeFlag } from '../../states/flagState';
+import { myChatRoomList } from '../../states/chatRoomState';
 import { userId } from '../../states/userState';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import SideBarChatRoomButton from './buttons/SideBarChatRoomButton';
+import SideBarCreateChatRoomButton from './buttons/SideBarCreateChatRoomButton';
+import SideBarMainButton from './buttons/SideBarMainButton';
+import ChatRoom from '../pages/ChatRoom/ChatRoom';
 
 export interface ChatRooms {
   chatRooms: ChatRoom[];
@@ -30,13 +31,20 @@ export default function ChatRoomSideBar() {
 
   const user_id = useRecoilValue(userId);
   const isWelcome = useRecoilValue(welcomeFlag);
-  const [chatRoomCreateFlag, setChatRoomCreateFlag] = useRecoilState(createChatRoomFlag);
   const [myChatRooms, setMyChatRooms] = useRecoilState<ChatRoom[]>(myChatRoomList);
-  const [activeChatRoomList, setActiveChatRoomList] = useRecoilState(chatRoomActiveStateList);
+
 
   useEffect(() => {
     getMyChatRooms(0, 10);
   }, [isWelcome]);
+
+  /*  
+  if(!activeChatRoomComponentList[id]){
+    const newcomponert = {id:<ChatRoom id={id}/> }
+    const newComponentList = {...activeChatRoomComponentList,newcomponert};
+    setActiveChatRoomComponentList(newComponentList);
+  }
+  */
 
   async function getMyChatRooms(offset: number, limit: number) {
     const token = auth.getToken('accessToken');
@@ -51,74 +59,21 @@ export default function ChatRoomSideBar() {
           },
           headers: { 'AUTHORIZATION': `Bearer ${token}` }
         });
-      console.log(res.data.chatRooms);
       setMyChatRooms(res.data.chatRooms);
     } catch (error) {
       alert(error);
     }
   }
-  
-  /**
-   * id를 받아서 해당 id의 chatroom button component를 반환
-   * @param id
-   * @returns chatroom button component [wrapper, icon, bar]
-   */
-  function createMainButton() {
-
-    const [isActive, setIsActive] = useRecoilState(dynamicBtnClass('main'));
-
-    if (!activeChatRoomList.includes(setIsActive)) {
-      setActiveChatRoomList([...activeChatRoomList, setIsActive])
-    }
-
-    function handleClick() {
-      if (isActive === true) {
-        activeChatRoomList.forEach((setter) => {
-          setter(true);
-        })
-        setIsActive(!isActive);
-      }
-    }
-
-    return (
-      <div className='chat-room-wrapper'>
-        <Link to='/'>
-          <div className={isActive ? 'main-button' : 'main-button button-clicked'} onClick={handleClick}><img src={logo} alt="logo" /></div>
-        </Link>
-        <div className={isActive ? 'chat-room-bar' : 'chat-room-bar bar-clicked'} />
-      </div>
-    )
-  }
-
-  /**
-   * createChatRoomBtn component를 반환
-   * @param 
-   * @returns create chat-room button [wrapper, icon, bar]
-   */
-  function createChatRoomBtn() {
-
-    function handleClick() {
-      if (chatRoomCreateFlag !== false) {
-        setChatRoomCreateFlag(false);
-      }
-    }
-
-    return (
-      <div className='chat-room-wrapper'>
-        <div className='chat-room-icon' onClick={handleClick} ><img src={plus} alt="logo" /></div>
-      </div>
-    );
-  }
 
   return (
     <div className='chat-room-side-bar-wrapper'>
       <div className='chat-room-list'>
-        {createMainButton()}
+        <SideBarMainButton />
         <div className='divder' />
-          {myChatRooms.map((chatRoom) => (
-            <SideBarChatRoomButton name={chatRoom.name} id={chatRoom.chatRoomId} key={chatRoom.chatRoomId} />
-          ))}
-        {createChatRoomBtn()}
+        {myChatRooms.map((chatRoom) => (
+          <SideBarChatRoomButton name={chatRoom.name} id={chatRoom.chatRoomId} key={chatRoom.chatRoomId} />
+        ))}
+        <SideBarCreateChatRoomButton />
       </div>
     </div>
   )

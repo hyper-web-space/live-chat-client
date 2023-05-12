@@ -1,7 +1,9 @@
 
 import { atom,SetterOrUpdater } from 'recoil';
 
+
 import { ChatRoom } from '../components/pages/MainPage/MainPage';
+
 
 export const chatRoomCount = atom<number>({
     key : 'chatRoomCount',
@@ -42,4 +44,9 @@ export const chatRoomActiveStateList = atom<SetterOrUpdater<boolean>[]>({
 export const allChatRoomList = atom<ChatRoom[]>({
     key : 'allChatRoomList',
     default : [],
+});
+
+export const chatRoomComponentList = atom<Record<string, JSX.Element >>({
+    key : 'chatRoomComponentList',
+    default : {},
 });

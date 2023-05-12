@@ -1,7 +1,7 @@
 import { useRecoilState, SetterOrUpdater } from 'recoil';
 import { dynamicBtnClass } from '../../../states/flagState';
 import {chatRoomActiveStateList} from '../../../states/chatRoomState';
-
+import { useEffect } from 'react';
 
 export default function SideBarChatRoomButton({id,name} : {id:string,name:string}) : JSX.Element {
 
@@ -9,10 +9,12 @@ export default function SideBarChatRoomButton({id,name} : {id:string,name:string
   const [isActive, setIsActive] = useRecoilState(dynamicBtnClass(id));
   const [activeChatRoomList, setActiveChatRoomList] = useRecoilState(chatRoomActiveStateList);
 
-  if (!activeChatRoomList.includes(setIsActive)) {
-    const newList:SetterOrUpdater<boolean>[] = [...activeChatRoomList, setIsActive];
-    setActiveChatRoomList(newList);
-  }
+  useEffect(() => {
+    if (!activeChatRoomList.includes(setIsActive)) {
+      const newList:SetterOrUpdater<boolean>[] = [...activeChatRoomList, setIsActive];
+      setActiveChatRoomList(newList);
+    }  
+  },[]);
 
   function handleClick() {
     if (isActive === true) {
@@ -21,6 +23,7 @@ export default function SideBarChatRoomButton({id,name} : {id:string,name:string
       })
       setIsActive(!isActive);
     }
+
   }
 
 

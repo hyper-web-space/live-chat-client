@@ -12,7 +12,6 @@ import { useState } from 'react';
 export default function CreateChatRoom() {
 
   const [signUpFlag, setSignUpFlag] = useState<boolean>(false);
-
   const [, setCreateChatRoom] = useRecoilState(createChatRoomFlag);
   const [chatRoomName, setChatRoomName] = useRecoilState(createChatRoomName);
   const [chatRoomPassWord, setChatRoomPassWord] = useRecoilState(createChatRoomPassWord);

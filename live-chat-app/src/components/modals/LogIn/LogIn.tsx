@@ -3,7 +3,6 @@ import './LogIn.scss';
 import logo from '../../../images/logos/main-logo.png';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { loginFlag, welcomeFlag } from '../../../states/flagState';
-import {chatRoomList} from '../../../states/chatRoomState';
 import axios from '../../../common/api/axios';
 import requests from '../../../common/api/requests';
 import auth from '../../../common/auth/session';
@@ -16,7 +15,6 @@ export default function LogIn() {
 
     const setLoginFlag = useSetRecoilState(loginFlag);
     const setWelcomeFlag = useSetRecoilState(welcomeFlag);
-    const setChatList = useSetRecoilState(chatRoomList);
 
     const [id, setId] = useRecoilState(userId);
     const [pw, setPw] = useRecoilState(userPw);

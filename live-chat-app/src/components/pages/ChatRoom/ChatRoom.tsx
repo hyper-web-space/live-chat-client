@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ChatRoom() {
+export default function ChatRoom({id} : {id:string}) {
 
   //해당 chatroom id를 받아서 해당 채팅방 데이터 받아옴
 
@@ -12,7 +12,7 @@ export default function ChatRoom() {
 		<div className="chat-box"></div>
 		<div className="message-input">
 			<input type="text" placeholder="메시지를 입력하세요"/>
-			<button>보내기</button>
+			<button>{id}</button>
 		</div>
 	</div>
   )
