@@ -6,7 +6,7 @@ import session from '../../../common/auth/session';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { loginFlag, welcomeFlag } from '../../../states/flagState';
 import { chatRoomList, chatRoomCount } from '../../../states/chatRoomState';
-import { userId } from '../../../states/userState';
+//import { userId } from '../../../states/userState';
 import LogIn from '../../modals/LogIn/LogIn';
 import SignUp from '../../modals/SignUp/SignUp';
 import { useEffect } from 'react';
@@ -27,7 +27,7 @@ export interface ChatRoom {
 
 export default function MainPage() {
 
-  const user_id = useRecoilValue(userId);
+  //const user_id = useRecoilValue(userId);
   const isLogin = useRecoilValue(loginFlag);
   const isWelcome = useRecoilValue(welcomeFlag);
 

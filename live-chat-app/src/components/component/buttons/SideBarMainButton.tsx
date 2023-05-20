@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 
 export default function SideBarMainButton() {
 
-
     const [isActive, setIsActive] = useRecoilState(dynamicBtnClass('main'));
     const [activeChatRoomList, setActiveChatRoomList] = useRecoilState(chatRoomActiveStateList);
 

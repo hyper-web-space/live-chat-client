@@ -4,15 +4,17 @@ import Nav from './components/component/Nav';
 import ChatRoomSideBar from './components/component/ChatRoomSideBar';
 import UserSideBar from './components/component/UserSideBar';
 import MainPage from './components/pages/MainPage/MainPage';
-import ChatRoom from './components/pages/ChatRoom/ChatRoom';
 import CreateChatRoom from './components/modals/CreateChatRoom/CreateChatRoom';
 
 import { useRecoilValue } from 'recoil';
 import { createChatRoomFlag } from '../src/states/flagState';
+import {chatRoomComponentList,currentChatRoom} from '../src/states/chatRoomState';
 
 function App() {
 
   const createChatRoom = useRecoilValue(createChatRoomFlag);
+  const currentChatRoomId = useRecoilValue(currentChatRoom);
+  const chatRoomComponent = useRecoilValue(chatRoomComponentList);
 
   const Layout = () => {
     return (
@@ -35,7 +37,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
-          <Route path="/chat-room" element={<ChatRoom />} />
+          <Route path="/chat-room" element={ chatRoomComponent[currentChatRoomId]}/>
         </Route>
       </Routes>
     </div>

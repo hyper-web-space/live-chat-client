@@ -1,18 +1,23 @@
 import { useRecoilState, SetterOrUpdater } from 'recoil';
 import { dynamicBtnClass } from '../../../states/flagState';
-import { chatRoomActiveStateList } from '../../../states/chatRoomState';
+import { chatRoomActiveStateList, currentChatRoom} from '../../../states/chatRoomState';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function SideBarChatRoomButton({ id, name }: { id: string, name: string }): JSX.Element {
 
 
   const [isActive, setIsActive] = useRecoilState(dynamicBtnClass(id));
   const [activeChatRoomList, setActiveChatRoomList] = useRecoilState(chatRoomActiveStateList);
+  const [, setCurrentChatRoomId] = useRecoilState(currentChatRoom);
 
-  if (!activeChatRoomList.includes(setIsActive)) {
-    const newList: SetterOrUpdater<boolean>[] = [...activeChatRoomList, setIsActive];
-    setActiveChatRoomList(newList);
-  }
+  //가설 1 동시성 이슈
+  useEffect(()=>{
+    if (!activeChatRoomList.includes(setIsActive)) {
+      const newList: SetterOrUpdater<boolean>[] = [...activeChatRoomList, setIsActive];
+      setActiveChatRoomList(newList);
+    }
+  },[isActive])
 
 
   function handleClick() {
@@ -22,10 +27,12 @@ export default function SideBarChatRoomButton({ id, name }: { id: string, name: 
       })
       setIsActive(!isActive);
     }
+    setCurrentChatRoomId(id);
   }
 
   return (
     <div key={id + '-wrapper'} className='chat-room-wrapper'>
+      <Link to='/chat-room'/>
       <div key={id} className={isActive ? 'chat-room-icon' : 'chat-room-icon button-clicked'} onClick={handleClick}><p>{name}</p></div>
       <div key={id + '-bar'} className={isActive ? 'chat-room-bar' : 'chat-room-bar bar-clicked'} />
     </div>

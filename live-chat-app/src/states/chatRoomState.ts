@@ -50,3 +50,8 @@ export const chatRoomComponentList = atom<Record<string, JSX.Element >>({
     key : 'chatRoomComponentList',
     default : {},
 });
+
+export const currentChatRoom = atom<string>({
+    key : 'currentChatRoom',
+    default : '',
+});
