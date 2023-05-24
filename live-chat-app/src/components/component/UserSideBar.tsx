@@ -1,4 +1,3 @@
-import React from 'react'
 import './UserSideBar.scss'
 
 export default function UserSideBar() {
