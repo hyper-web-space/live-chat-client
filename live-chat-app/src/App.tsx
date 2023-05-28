@@ -7,7 +7,7 @@ import MainPage from './components/pages/MainPage/MainPage';
 import CreateChatRoom from './components/modals/CreateChatRoom/CreateChatRoom';
 
 import { useRecoilValue } from 'recoil';
-import { createChatRoomFlag } from '../src/states/flagState';
+import { createChatRoomFlag ,welcomeFlag } from '../src/states/flagState';
 import {chatRoomComponentList,currentChatRoom} from '../src/states/chatRoomState';
 
 function App() {
@@ -15,8 +15,21 @@ function App() {
   const createChatRoom = useRecoilValue(createChatRoomFlag);
   const currentChatRoomId = useRecoilValue(currentChatRoom);
   const chatRoomComponent = useRecoilValue(chatRoomComponentList);
+  const isWelcome = useRecoilValue(welcomeFlag);
+
+  // 로그인된지 확인
 
   const Layout = () => {
+    
+    /*
+     dummy background
+    */ 
+    if(!isWelcome){
+      return( 
+        <Outlet/>
+      )
+    }
+
     return (
       <div className='main-wrapper'>
         <div className='upper-wrapper'>
@@ -25,19 +38,19 @@ function App() {
         <div className='lower-wrapper'>
           <ChatRoomSideBar />
           <UserSideBar />
-          <Outlet />
+          <Outlet/>
         </div>
       </div>
     );
   };
-
+ 
   return (
     <div className="App">
       {createChatRoom ?  '': <CreateChatRoom />}
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
-          <Route path="/chat-room" element={ chatRoomComponent[currentChatRoomId]}/>
+          <Route path="/chat-room" element={chatRoomComponent[currentChatRoomId]}/>
         </Route>
       </Routes>
     </div>

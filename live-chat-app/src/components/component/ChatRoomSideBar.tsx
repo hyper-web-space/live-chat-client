@@ -48,24 +48,22 @@ export default function ChatRoomSideBar() {
   }, [isWelcome]);
 
   /*
-    ChatRoomComponent Update가 필요한지 체크하는 로직이
-    현재 매우매우 형편없음. 개선必
+    ChatRoomComponent Update가 필요한지 체크하는 로직
   */
   function setUpChatRoomComponet(list: ChatRoom[]) {
-    const newComp: Record<string, JSX.Element> = {};
-    list.map((chatRoom) => {
-      if(!chatRoomComponent[chatRoom.chatRoomId]){
-        newComp[chatRoom.chatRoomId] = <ChatRoom id={chatRoom.chatRoomId}/>;
-      }
-    })
-    if( Object.keys(newComp).length !== 0){
-      list.map((chatRoom) => {
-        if(!chatRoomComponent[chatRoom.chatRoomId]){
-          newComp[chatRoom.chatRoomId] = <ChatRoom id={chatRoom.chatRoomId}/>;
-        }
-      })
-      setChatRoomComponent(newComp);
+    const newComp: Record<string, JSX.Element> = list
+    .filter((chatRoom) => !chatRoomComponent[chatRoom.chatRoomId])
+    .reduce((prev, current)=>{
+      prev[current.chatRoomId] = <ChatRoom id ={current.chatRoomId}/>
+      return prev
+    },{} as Record<string, JSX.Element>);
+
+
+    if(Object.keys(newComp).length === 0){
+      return;
     }
+
+    setChatRoomComponent(newComp);
   }
 
   async function getMyChatRooms(offset: number, limit: number) {
