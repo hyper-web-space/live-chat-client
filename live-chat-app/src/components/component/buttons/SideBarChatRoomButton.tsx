@@ -19,13 +19,11 @@ export default function SideBarChatRoomButton({ id, name }: { id: string, name: 
 
   // 버튼이 선택되었다면 선택된 버튼에 해당하는 className 으로 사용
   return (
-    <Link to = '/chat-room'>
-    <div key={`${id}-wrapper`} className='chat-room-wrapper'>
+    <Link key={`${id}-wrapper`} className='chat-room-wrapper' to = '/chat-room'>
       <div key={id} className={isSelected ? 'chat-room-icon button-clicked' : 'chat-room-icon'} onClick={handleClick}>
         <p>{name}</p>
       </div>
       <div key={`${id}-bar`} className={isSelected ? 'chat-room-bar bar-clicked' : 'chat-room-bar'} />
-    </div>
     </Link>
   )
 }

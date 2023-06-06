@@ -1,17 +1,34 @@
+/*
+  자체 모듈 import 선언부
+*/
 import './ChatRoomSideBar.scss'
 import axios from '../../common/api/axios';
 import requests from '../../common/api/requests';
 import auth from '../../common/auth/session';
+
+/*
+  React 연관 import 선언부
+*/ 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { welcomeFlag } from '../../states/flagState';
 import { myChatRoomList,chatRoomComponentList } from '../../states/chatRoomState';
 import { userId } from '../../states/userState';
-//import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+
+/*
+  components import 선언부
+*/
 import SideBarChatRoomButton from './buttons/SideBarChatRoomButton';
 import SideBarCreateChatRoomButton from './buttons/SideBarCreateChatRoomButton';
 import SideBarMainButton from './buttons/SideBarMainButton';
 import ChatRoom from '../pages/ChatRoom/ChatRoom';
+
+/*
+  stomp import 선언부
+*/
+import stomp from '../../common/api/stomp';
+
+
+const client = stomp.getInstance();
 
 export interface ChatRooms {
   chatRooms: ChatRoom[];
@@ -30,11 +47,9 @@ export interface ChatRoom {
 export default function ChatRoomSideBar() {
 
   const user_id = useRecoilValue(userId);
-  const isWelcome = useRecoilValue(welcomeFlag);
   const [myChatRooms, setMyChatRooms] = useRecoilState<ChatRoom[]>(myChatRoomList);
   const [chatRoomComponent, setChatRoomComponent] = useRecoilState(chatRoomComponentList);
 
-  // [isWelcome] 넣는게 맞는가..?
   // Paging 구현 아직안함
   useEffect(() => {
     getMyChatRooms(0, 10)
@@ -44,8 +59,14 @@ export default function ChatRoomSideBar() {
     })
     .then(result => {
       setMyChatRooms(result);
+      return result;
     })
-  }, [isWelcome]);
+    .then(() => {
+      myChatRooms.forEach((chatRoom) => {
+        client.subscribeChatRoom(chatRoom.chatRoomId);
+      });
+    })
+  }, []);
 
   /*
     ChatRoomComponent Update가 필요한지 체크하는 로직
@@ -57,7 +78,6 @@ export default function ChatRoomSideBar() {
       prev[current.chatRoomId] = <ChatRoom id ={current.chatRoomId}/>
       return prev
     },{} as Record<string, JSX.Element>);
-
 
     if(Object.keys(newComp).length === 0){
       return;

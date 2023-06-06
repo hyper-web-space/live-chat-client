@@ -15,7 +15,6 @@ export const chatRoomList = atom<ChatRoom[]>({
     default : [],
 });
 
-
 export const myChatRoomList = atom<ChatRoom[]>({
     key : 'myChatRoomList',
     default : [],

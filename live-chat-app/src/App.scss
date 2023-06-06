@@ -1,5 +1,9 @@
+@use "scss/global.scss";
+
+
 body{
     margin: 0;
+    background-color: global.$strong-bg-color;
 }
 
 .main-wrapper{

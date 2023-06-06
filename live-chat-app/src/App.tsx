@@ -25,9 +25,17 @@ function App() {
      dummy background
     */ 
     if(!isWelcome){
-      return( 
-        <Outlet/>
-      )
+      return (
+        <div className='main-wrapper'>
+          <div className='upper-wrapper'>
+            <Nav />
+          </div>
+          <div className='lower-wrapper'>
+            <UserSideBar />
+            <Outlet/>
+          </div>
+        </div>
+      );
     }
 
     return (
@@ -37,7 +45,6 @@ function App() {
         </div>
         <div className='lower-wrapper'>
           <ChatRoomSideBar />
-          <UserSideBar />
           <Outlet/>
         </div>
       </div>

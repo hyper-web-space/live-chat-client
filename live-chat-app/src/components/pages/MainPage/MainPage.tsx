@@ -6,7 +6,6 @@ import session from '../../../common/auth/session';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { loginFlag, welcomeFlag } from '../../../states/flagState';
 import { chatRoomList, chatRoomCount } from '../../../states/chatRoomState';
-//import { userId } from '../../../states/userState';
 import LogIn from '../../modals/LogIn/LogIn';
 import SignUp from '../../modals/SignUp/SignUp';
 import { useEffect } from 'react';
@@ -33,21 +32,17 @@ export default function MainPage() {
 
   const [roomCount,] = useRecoilState<number>(chatRoomCount);
   const [chatList, setChatList] = useRecoilState<ChatRoom[]>(chatRoomList);
-  const token = session.getToken('accessToken');
+  const token= session.getToken('accessToken');
 
-  //load chat list
   useEffect(() => {
     getChatList(roomCount, 10);
   }, [isWelcome]);
 
-
   //query chat list
   const getChatList = async (offset: number, limit: number): Promise<void> => {
-
     if (!session.checkToken('accessToken')) {
       return;
     }
-
     try {
       const res = await axios.get<ChatRooms>(requests.chatRooms,
         {
@@ -59,12 +54,10 @@ export default function MainPage() {
         }
       );
       setChatList(res.data.chatRooms);
-
     } catch (error) {
       console.log(error);
     }
   }
-
 
   //random image generator func
   function djb2(str: string) {
@@ -97,7 +90,6 @@ export default function MainPage() {
     if (isLogin) {
       return <LogIn />
     }
-
     return <SignUp />
 
   }
