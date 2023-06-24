@@ -8,8 +8,8 @@ export default function SideBarChatRoomButton({ id, name }: { id: string, name: 
 
 
   const [isActive, setIsActive] = useRecoilState(dynamicBtnClass(id));
-  const [activeChatRoomList, setActiveChatRoomList] = useRecoilState(chatRoomActiveStateList);
   const [, setCurrentChatRoomId] = useRecoilState(currentChatRoom);
+  const [activeChatRoomList, setActiveChatRoomList] = useRecoilState(chatRoomActiveStateList);
 
   //가설 1 동시성 이슈
   useEffect(()=>{
@@ -27,14 +27,18 @@ export default function SideBarChatRoomButton({ id, name }: { id: string, name: 
       })
       setIsActive(!isActive);
     }
-    setCurrentChatRoomId(id);
+    setTimeout(() => {
+      setCurrentChatRoomId(id);
+    }
+      , 0);
   }
 
   return (
+    <Link to = '/chat-room'>
     <div key={id + '-wrapper'} className='chat-room-wrapper'>
-      <Link to='/chat-room'/>
       <div key={id} className={isActive ? 'chat-room-icon' : 'chat-room-icon button-clicked'} onClick={handleClick}><p>{name}</p></div>
       <div key={id + '-bar'} className={isActive ? 'chat-room-bar' : 'chat-room-bar bar-clicked'} />
     </div>
+    </Link>
   )
 }
