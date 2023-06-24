@@ -1,8 +1,19 @@
 
 import { atom,SetterOrUpdater } from 'recoil';
 
-
-import { ChatRoom } from '../components/pages/MainPage/MainPage';
+export interface ChatRooms {
+    chatRooms: ChatRoom[];
+  }
+  
+  export interface ChatRoom {
+    chatRoomId: string;
+    name: string;
+    creator: string;
+    numberOfUser: number;
+    privateRoom: boolean;
+    createdAt: string;
+    creatRoomId: string;
+  }
 
 
 export const chatRoomCount = atom<number>({
@@ -10,7 +21,7 @@ export const chatRoomCount = atom<number>({
     default : 0,
 });
 
-export const chatRoomList = atom<ChatRoom[]>({
+export const chatRoomList = atom<ChatRoom[]|undefined>({
     key : 'chatRoomList',
     default : [],
 });
@@ -53,4 +64,9 @@ export const chatRoomComponentList = atom<Record<string, JSX.Element >>({
 export const currentChatRoom = atom<string>({
     key : 'currentChatRoom',
     default : '',
+});
+
+export const passWordInput = atom<(boolean|string)[]>({
+    key : 'passWordInput',
+    default : [false,''],
 });

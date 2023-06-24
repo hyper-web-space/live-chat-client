@@ -3,14 +3,13 @@
 */
 import './ChatRoomSideBar.scss'
 import axios from '../../common/api/axios';
-import requests from '../../common/api/requests';
-import auth from '../../common/auth/session';
+
 
 /*
   React 연관 import 선언부
 */ 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { myChatRoomList,chatRoomComponentList } from '../../states/chatRoomState';
+import { myChatRoomList,chatRoomComponentList,ChatRoom } from '../../states/chatRoomState';
 import { userId } from '../../states/userState';
 import { useEffect } from 'react';
 
@@ -20,7 +19,7 @@ import { useEffect } from 'react';
 import SideBarChatRoomButton from './buttons/SideBarChatRoomButton';
 import SideBarCreateChatRoomButton from './buttons/SideBarCreateChatRoomButton';
 import SideBarMainButton from './buttons/SideBarMainButton';
-import ChatRoom from '../pages/ChatRoom/ChatRoom';
+import ChatingRoom from '../pages/ChatRoom/ChatingRoom';
 
 /*
   stomp import 선언부
@@ -29,20 +28,7 @@ import stomp from '../../common/api/stomp';
 
 
 const client = stomp.getInstance();
-
-export interface ChatRooms {
-  chatRooms: ChatRoom[];
-}
-
-export interface ChatRoom {
-  chatRoomId: string;
-  name: string;
-  creator: string;
-  numberOfUser: number;
-  privateRoom: boolean;
-  createdAt: string;
-  creatRoomId: string;
-}
+const axiosClient = new axios();
 
 export default function ChatRoomSideBar() {
 
@@ -52,7 +38,7 @@ export default function ChatRoomSideBar() {
 
   // Paging 구현 아직안함
   useEffect(() => {
-    getMyChatRooms(0, 10)
+    axiosClient.getMyChatRooms(user_id,0, 10)
     .then(result => {
       setUpChatRoomComponet(result);
       return result;
@@ -62,6 +48,7 @@ export default function ChatRoomSideBar() {
       return result;
     })
     .then(() => {
+      // 아직 타이밍 살짝 늦음.
       myChatRooms.forEach((chatRoom) => {
         client.subscribeChatRoom(chatRoom.chatRoomId);
       });
@@ -75,7 +62,7 @@ export default function ChatRoomSideBar() {
     const newComp: Record<string, JSX.Element> = list
     .filter((chatRoom) => !chatRoomComponent[chatRoom.chatRoomId])
     .reduce((prev, current)=>{
-      prev[current.chatRoomId] = <ChatRoom id ={current.chatRoomId}/>
+      prev[current.chatRoomId] = <ChatingRoom id ={current.chatRoomId}/>
       return prev
     },{} as Record<string, JSX.Element>);
 
@@ -86,24 +73,6 @@ export default function ChatRoomSideBar() {
     setChatRoomComponent(newComp);
   }
 
-  async function getMyChatRooms(offset: number, limit: number) {
-    const token = auth.getToken('accessToken');
-    try {
-      const res = await axios.get(requests.getChatList,
-        {
-          params: {
-            offset: offset,
-            limit: limit,
-            user_id: user_id,
-          },
-          headers: { 'AUTHORIZATION': `Bearer ${token}` }
-        });
-      return res.data.chatRooms;
-    } catch (error) {
-      alert(error);
-    }
-    return [];
-  }
 
   return (
     <div className='chat-room-side-bar-wrapper'>

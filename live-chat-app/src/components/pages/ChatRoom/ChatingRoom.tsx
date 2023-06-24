@@ -1,10 +1,10 @@
-import './ChatRoom.scss';
+import './ChatingRoom.scss';
 
 import stomp from '../../../common/api/stomp';
 
 const client = stomp.getInstance();
 
-export default function ChatRoom({ id }: { id: string }) {
+export default function ChatingRoom({ id }: { id: string }) {
 
 	//해당 chatroom id를 받아서 해당 채팅방 데이터 받아옴
 
