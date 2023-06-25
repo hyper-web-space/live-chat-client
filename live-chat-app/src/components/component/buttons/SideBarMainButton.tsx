@@ -27,11 +27,9 @@ export default function SideBarMainButton() {
     }
 
     return (
-        <div className='chat-room-wrapper'>
-            <Link to='/'>
-                <div className={isActive ? 'main-button' : 'main-button button-clicked'} onClick={handleClick}><img src={logo} alt="logo" /></div>
-            </Link>
+        <Link className='chat-room-wrapper' to='/'>
+            <div className={isActive ? 'main-button' : 'main-button button-clicked'} onClick={handleClick}><img src={logo} alt="logo" /></div>
             <div className={isActive ? 'chat-room-bar' : 'chat-room-bar bar-clicked'} />
-        </div>
+        </Link>
     )
 }
