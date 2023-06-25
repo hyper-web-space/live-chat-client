@@ -112,6 +112,7 @@ export default class AxiosClient {
     }
 
     async getMyChatRooms(user_id: string, offset: number, limit: number) {
+        console.log('getMyChatRooms overFlow bithes');
         const token = auth.getToken('accessToken');
         try {
             const res = await this.instance.get(requests.getChatList,
@@ -131,12 +132,13 @@ export default class AxiosClient {
     }
 
     async createChatRoom(chatRoomName: string, chatRoomPassWord: string, user_id: string) {
+        const password = (chatRoomPassWord=='')? null:chatRoomPassWord;
         const token = auth.getToken('accessToken');
         try {
             await this.instance.post(requests.chatRooms,
                 {
                     name: chatRoomName,
-                    password: chatRoomPassWord,
+                    password: password,
                 }, {
                 headers: {
                     'AUTHORIZATION': `Bearer ${token}`

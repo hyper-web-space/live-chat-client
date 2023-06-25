@@ -9,7 +9,7 @@ import axios from '../../common/api/axios';
   React 연관 import 선언부
 */ 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { myChatRoomList,chatRoomComponentList,ChatRoom } from '../../states/chatRoomState';
+import { myChatRoomList,chatRoomComponentList,ChatRoom,compareArrays } from '../../states/chatRoomState';
 import { userId } from '../../states/userState';
 import { useEffect } from 'react';
 
@@ -40,11 +40,16 @@ export default function ChatRoomSideBar() {
   useEffect(() => {
     axiosClient.getMyChatRooms(user_id,0, 10)
     .then(result => {
+      console.log('1번마.');
       setUpChatRoomComponet(result);
       return result;
     })
     .then(result => {
-      setMyChatRooms(result);
+      console.log('진입.');
+      if (compareArrays(result,myChatRooms)) {
+        console.log('뚫림.');
+        setMyChatRooms(result);
+      }
       return result;
     })
     .then(() => {
@@ -65,12 +70,13 @@ export default function ChatRoomSideBar() {
       prev[current.chatRoomId] = <ChatingRoom id ={current.chatRoomId}/>
       return prev
     },{} as Record<string, JSX.Element>);
-
+    console.log(newComp);
     if(Object.keys(newComp).length === 0){
       return;
+    }else{
+      const setComp: Record<string, JSX.Element> = {...chatRoomComponent ,...newComp}
+      setChatRoomComponent(setComp);
     }
-
-    setChatRoomComponent(newComp);
   }
 
 
