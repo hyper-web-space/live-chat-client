@@ -5,14 +5,13 @@ import arrow from '../../../../public/left-arrow.png';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { loginFlag } from '../../../states/flagState';
 import axios from '../../../common/api/axios';
-import requests from '../../../common/api/requests';
 
 
 import { userId, userPw } from '../../../states/userState';
 
 
 export default function SignUp() {
-
+  const axiosClient = new axios();
   const setLoginFlag = useSetRecoilState(loginFlag);
   const [id, setId] = useRecoilState(userId);
   const [pw, setPw] = useRecoilState(userPw);
@@ -33,19 +32,7 @@ export default function SignUp() {
   async function signUpClickHandler() {
     // 회원가입 정보 제출
     // POST 요청은 body에 실어 보냄
-    try {
-      console.log(id, pw);
-      await axios.post(requests.postSignUp, {
-        userId: id,
-        password: pw,
-      })
-
-      setLoginFlag(true);
-      alert('회원가입이 완료되었습니다.');
-    } catch (error) {
-      console.log(error);
-      alert('later make yeajung');
-    }
+    axiosClient.signUp(id, pw,setLoginFlag);
   }
 
   const resetState = () => {

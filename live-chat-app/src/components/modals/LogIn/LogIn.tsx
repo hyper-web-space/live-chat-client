@@ -4,15 +4,13 @@ import logo from '../../../images/logos/main-logo.png';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { loginFlag, welcomeFlag } from '../../../states/flagState';
 import axios from '../../../common/api/axios';
-import requests from '../../../common/api/requests';
-import auth from '../../../common/auth/session';
 
 import { userId, userPw } from '../../../states/userState';
 
 
 export default function LogIn() {
 
-
+    const axiosClient = new axios();
     const setLoginFlag = useSetRecoilState(loginFlag);
     const setWelcomeFlag = useSetRecoilState(welcomeFlag);
 
@@ -39,25 +37,13 @@ export default function LogIn() {
     }
 
     async function logInClickHandler(event: React.FormEvent<HTMLFormElement>) {
-
         event.preventDefault();
-        //로그인 정보 제출
-        // POST 요청은 body에 실어 보냄
-        try {
-            const res = await axios.post(requests.postLogin, {
-                userId: id,
-                password: pw,
-            });
-            console.log(res.data);
-            //발급된 JWT는 클라이언트 측에서 저장 - 세션 스토리지
-            auth.setToken('accessToken', res.data.accessToken);
-            auth.setToken('refreshToken', res.data.refreshToken);
-            setWelcomeFlag(true);
-        } catch (error) {
+        axiosClient.logIn(event, id, pw,setWelcomeFlag).catch(() => {
             resetState();
-            alert('later make yeajung');
-        }
+        })
+
     }
+
     //<button onClick={signUpClickHandler}>회원가입</button>
     return (
         <div>
