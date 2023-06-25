@@ -5,7 +5,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
-    height: 500px;
     border-radius: 15px;
     background-color: #2B2F33;
 }
@@ -27,4 +26,37 @@
     transition: opacity 0.3s ease-in-out;
     
     z-index: 11;
+<<<<<<< Updated upstream
   }
+=======
+}
+
+form {
+    input {
+        padding: 10px;
+        height: 20px;
+        width: 380px;
+        margin-top: 10px;
+        border: none;
+        background-color: #23272a;
+    }
+    p {
+        color: white;
+        font-weight: 300;
+        margin-left: 10px;
+        margin-bottom: 0;
+    }
+
+    .chat-room-create-button {
+        width: 400px;
+        height: 60px;
+        border: none;
+        font-size: 23px;
+        color: white;
+        background-color: #7289da;
+        margin-top: 30px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+}
+>>>>>>> Stashed changes

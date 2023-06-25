@@ -64,9 +64,12 @@ export default function CreateChatRoom() {
   function returnChatRoomContents() {
     return (
       <div className='create-chat-room-box'>
+<<<<<<< Updated upstream
         <h1>채팅방 만들기</h1>
         <div onClick={() => { setCreateChatRoom(true) }}>나가기</div>
         <p>지금 바로 채팅방을 만들어 보세요. 비밀번호 설정도 가능하답니다.</p>
+=======
+>>>>>>> Stashed changes
         <form onSubmit={submitHandler}>
           <p>채팅방 이름</p>
           <input
@@ -103,8 +106,14 @@ export default function CreateChatRoom() {
               setChatRoomPassWord(val);
             }}
             value={chatRoomPassWord}
+<<<<<<< Updated upstream
             type="password" />
           <button type='submit'>만들기</button>
+=======
+            type="password" 
+            placeholder='If you want a public room, do not enter a password'/>
+          <button className='chat-room-create-button' type='submit'>CREATE!!</button>
+>>>>>>> Stashed changes
         </form>
       </div>
     )
