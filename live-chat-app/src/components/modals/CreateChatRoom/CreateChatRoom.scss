@@ -1,4 +1,4 @@
-.create-chat-room-box{
+.create-chat-room-box {
     position: absolute;
     z-index: 20;
     top: 50%;
@@ -6,7 +6,14 @@
     transform: translate(-50%, -50%);
     width: 400px;
     border-radius: 15px;
-    background-color: #2B2F33;
+    background-color: #2b2f33;
+
+    h1 {
+        color: white;
+        font-weight: 600;
+        margin-left: 20px;
+        margin-bottom: 0;
+    }
 }
 
 .modal-back-drop {
@@ -24,11 +31,8 @@
     opacity: 0.9;
     filter: blur(5px);
     transition: opacity 0.3s ease-in-out;
-    
+
     z-index: 11;
-<<<<<<< Updated upstream
-  }
-=======
 }
 
 form {
@@ -55,8 +59,7 @@ form {
         color: white;
         background-color: #7289da;
         margin-top: 30px;
-        border-bottom-left-radius: 15px;
         border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 15px;
     }
 }
->>>>>>> Stashed changes

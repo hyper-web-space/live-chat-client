@@ -1,13 +1,8 @@
-import axios, { AxiosInstance }  from 'axios';
+import axios, { AxiosInstance } from 'axios';
+import requests from '../api/requests';
+import auth from '../auth/session';
 
-const instance:AxiosInstance = axios.create({
-    //baseURL : 'http://localhost:8000'
-    baseURL : '/api'
-})
 
-<<<<<<< Updated upstream
-export default instance;
-=======
 import { passWordInput, ChatRoom } from '../../states/chatRoomState'
 import { SetterOrUpdater, useRecoilState } from 'recoil';
 
@@ -53,7 +48,7 @@ export default class AxiosClient {
     */
     async logIn(event: React.FormEvent<HTMLFormElement>, id: string, pw: string, setWelcomFlag: SetterOrUpdater<boolean>) {
         //로그인 정보 제출
-
+        // POST 요청은 body에 실어 보냄
         try {
             const res = await this.instance.post(requests.postLogin, {
                 userId: id,
@@ -117,6 +112,7 @@ export default class AxiosClient {
     }
 
     async getMyChatRooms(user_id: string, offset: number, limit: number) {
+        console.log('getMyChatRooms overFlow bithes');
         const token = auth.getToken('accessToken');
         try {
             const res = await this.instance.get(requests.getChatList,
@@ -136,7 +132,7 @@ export default class AxiosClient {
     }
 
     async createChatRoom(chatRoomName: string, chatRoomPassWord: string, user_id: string) {
-        const password = (chatRoomPassWord === '')? null : chatRoomPassWord;
+        const password = (chatRoomPassWord=='')? null:chatRoomPassWord;
         const token = auth.getToken('accessToken');
         try {
             await this.instance.post(requests.chatRooms,
@@ -156,4 +152,3 @@ export default class AxiosClient {
 
 
 }
->>>>>>> Stashed changes

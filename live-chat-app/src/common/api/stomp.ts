@@ -52,6 +52,7 @@ export default class StompClient {
     }
 
     subscribeChatRoom(roomId: string) {
+        console.log('subscribeChatRoom');
         if(this.subList.includes(roomId)) {
             return false;
         }else{
@@ -64,6 +65,7 @@ export default class StompClient {
     }
 
     publishChatRoom(roomId: string, contents: string, userId: string) {
+        console.log('publishChatRoom');
         const msg = JSON.stringify({
             'sender': userId,
             'contents': contents,

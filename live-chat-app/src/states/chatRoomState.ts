@@ -5,7 +5,7 @@ export interface ChatRooms {
     chatRooms: ChatRoom[];
   }
   
-  export interface ChatRoom {
+export interface ChatRoom {
     chatRoomId: string;
     name: string;
     creator: string;
@@ -13,8 +13,22 @@ export interface ChatRooms {
     privateRoom: boolean;
     createdAt: string;
     creatRoomId: string;
-  }
+}
 
+export function compareArrays(arr1:ChatRoom[], arr2:ChatRoom[]) {
+    if (arr1.length !== arr2.length) {
+      return true; // 배열의 길이가 다르면 다른 배열로 판단
+    }
+  
+    for (let i = 0; i < arr1.length; i++) {
+      const obj1 = arr1[i];
+      const obj2 = arr2[i];
+      if (obj1.chatRoomId !== obj2.chatRoomId){
+        return true; // 객체의 id 값이 다르면 다른 배열로 판단
+      }
+    }
+    return false;
+}
 
 export const chatRoomCount = atom<number>({
     key : 'chatRoomCount',
